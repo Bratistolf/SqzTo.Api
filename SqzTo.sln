@@ -4,12 +4,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqzTo.Api", "Src\SqzTo.Api\SqzTo.Api.csproj", "{7625BE11-2715-452B-89A5-B1FCE6FD39D1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{88E59975-A853-49CA-8CEC-3A9CA7E404CF} = {88E59975-A853-49CA-8CEC-3A9CA7E404CF}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqzTo.Domain", "Src\SqzTo.Domain\SqzTo.Domain.csproj", "{8BF1F7B0-21DC-44F4-BF80-094534AB05F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqzTo.Application", "Src\SqzTo.Application\SqzTo.Application.csproj", "{1BAA22D2-9574-4A25-B3DE-D84ED6FC510D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8BF1F7B0-21DC-44F4-BF80-094534AB05F7} = {8BF1F7B0-21DC-44F4-BF80-094534AB05F7}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqzTo.Infrastructure", "Src\SqzTo.Infrastructure\SqzTo.Infrastructure.csproj", "{88E59975-A853-49CA-8CEC-3A9CA7E404CF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1BAA22D2-9574-4A25-B3DE-D84ED6FC510D} = {1BAA22D2-9574-4A25-B3DE-D84ED6FC510D}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{67C5C6DE-62BB-4AC5-8857-BCC8590BEBFD}"
 EndProject

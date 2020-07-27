@@ -1,23 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SqzTo.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SqzToController : Controller
+    public abstract class SqzToController : ControllerBase
     {
-        [HttpPost, Route("/")]
-        public async Task<IActionResult> GetOrCreateFrom([FromBody] string url)
-        {
-            //FUCKOFF: The Official Site of a Symbolic Behavior Model Modification Suggestion - https://natribu.org/en/
-            return Json("TOSSBMMS");
-        }
+        private IMediator _mediator;
 
-        [HttpGet, Route("/{route}")]
-        public async Task<IActionResult> NavigateTo([FromRoute] string route)
-        {
-            return Json("https://natribu.org/en/");
-        }
+        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
     }
 }

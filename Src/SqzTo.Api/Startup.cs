@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SqzTo.Application;
+using SqzTo.Infrastructure;
 
-namespace SqzTo
+namespace SqzTo.Api
 {
     public class Startup
     {
@@ -19,6 +21,11 @@ namespace SqzTo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddApplication();
+            services.AddInfrastructure(Configuration);
+
+            services.AddOpenApiDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +41,10 @@ namespace SqzTo
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+            app.UseReDoc();
 
             app.UseEndpoints(endpoints =>
             {
