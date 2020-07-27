@@ -1,0 +1,2 @@
+# sqzto
+Simplistic URL shortener
