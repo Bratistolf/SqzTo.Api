@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SqzTo.Application.Common;
+using SqzTo.Application.Common.Interfaces;
 using SqzTo.Infrastructure.Persistence;
 
 namespace SqzTo.Infrastructure

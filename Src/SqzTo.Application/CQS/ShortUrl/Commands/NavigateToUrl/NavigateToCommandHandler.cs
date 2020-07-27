@@ -1,5 +1,7 @@
 ﻿using MediatR;
-using SqzTo.Application.Common;
+using Microsoft.EntityFrameworkCore;
+using SqzTo.Application.Common.Exceptions;
+using SqzTo.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +18,16 @@ namespace SqzTo.Application.CQS.ShortUrl.Commands.NavigateToUrl
 
         public async Task<string> Handle(NavigateToCommand request, CancellationToken cancellationToken)
         {
-            return "https://natribu.org/en/";
+            var existingUrl = await _context.ShortUrls.FirstOrDefaultAsync(url => url.Route == request.Route);
+            if (existingUrl == null)
+            {
+                throw new NotFoundException();
+            }
+
+            existingUrl.Clicks++;
+            var savingResult = await _context.SaveChangesAsync(cancellationToken);
+
+            return existingUrl.OriginalUrl;
         }
     }
 }

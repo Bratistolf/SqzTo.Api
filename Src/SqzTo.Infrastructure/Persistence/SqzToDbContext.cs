@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SqzTo.Application.Common;
+using SqzTo.Application.Common.Interfaces;
 using SqzTo.Domain.Entities;
-using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +20,7 @@ namespace SqzTo.Infrastructure.Persistence
             foreach (var entry in ChangeTracker.Entries<ShortUrl>())
             {
                 //TODO: Proper state modifier...
-                entry.Entity.Created = DateTime.Now;
+                //entry.Entity.Created = DateTime.Now;
             }
 
             return base.SaveChangesAsync(cancellationToken);
