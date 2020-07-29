@@ -7,7 +7,7 @@ namespace SqzTo.Application.Common.Interfaces
 {
     public interface ISqzToDbContext
     {
-        DbSet<ShortUrl> ShortUrls { get; set; }
+        DbSet<SqzLink> ShortUrls { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

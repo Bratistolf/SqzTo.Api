@@ -2,7 +2,7 @@
 
 namespace SqzTo.Application.CQS.ShortUrl.Commands.CreateShortUrl
 {
-    public partial class CreateShortUrlCommand : IRequest<string>
+    public partial class CreateSqzLinkCommand : IRequest<string>
     {
         public string Url { get; set; }
     }
