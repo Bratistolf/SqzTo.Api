@@ -11,6 +11,7 @@ namespace SqzTo.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
             services.AddScoped<IUrlShorteningService, MD5UrlShorteningService>();
 
             return services;
