@@ -1,0 +1,21 @@
+.btn{
+    &-sbmt{
+        margin: 25px auto;
+        padding: 15px;
+        background-color: var(--color-coral);
+        border-radius: 25px;
+        border: 1px solid;
+        cursor: pointer;
+        color: #ffffff;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 24px;
+        line-height: 28px;
+
+        &:active{
+            background-color: #ffffff;
+            color: var(--color-coral);
+            border-color: var(--color-coral);
+        }
+    }
+}
