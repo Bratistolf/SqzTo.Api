@@ -3,7 +3,7 @@ using SqzTo.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SqzTo.Application.CQS.ShortUrl.Commands.CreateShortUrl
+namespace SqzTo.Application.CQRS.SqzLink.Commands.CreateShortUrl
 {
     public class CreateSqzLinkCommandHandler : IRequestHandler<CreateSqzLinkCommand, string>
     {
@@ -26,7 +26,7 @@ namespace SqzTo.Application.CQS.ShortUrl.Commands.CreateShortUrl
                 Clicks = 0
             };
 
-            _context.ShortUrls.Add(newSqzLink);
+            _context.SqzLinks.Add(newSqzLink);
             var savingResult = await _context.SaveChangesAsync(cancellationToken);
 
             return newSqzLink.Route;

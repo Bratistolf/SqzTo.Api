@@ -9,7 +9,7 @@ namespace SqzTo.Infrastructure.Persistence
 {
     public class SqzToDbContext : DbContext, ISqzToDbContext
     {
-        public DbSet<SqzLink> ShortUrls { get; set; }
+        public DbSet<SqzLink> SqzLinks { get; set; }
 
         public SqzToDbContext(DbContextOptions<SqzToDbContext> options) : base(options)
         {

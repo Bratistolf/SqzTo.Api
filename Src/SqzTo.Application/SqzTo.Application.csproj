@@ -14,8 +14,4 @@
     <ProjectReference Include="..\SqzTo.Domain\SqzTo.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CQS\ShortUrl\Queries\" />
-  </ItemGroup>
-
 </Project>

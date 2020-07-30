@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace SqzTo.Application.CQS.ShortUrl.Commands.CreateShortUrl
+namespace SqzTo.Application.CQRS.SqzLink.Commands.CreateShortUrl
 {
     public partial class CreateSqzLinkCommand : IRequest<string>
     {

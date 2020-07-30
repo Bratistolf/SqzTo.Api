@@ -5,20 +5,20 @@ using SqzTo.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SqzTo.Application.CQS.ShortUrl.Commands.NavigateToUrl
+namespace SqzTo.Application.CQRS.SqzLink.Commands.NavigateSqzLink
 {
-    public class NavigateToCommandHandler : IRequestHandler<NavigateToCommand, string>
+    public class NavigateSqzLinkCommandHandler : IRequestHandler<NavigateSqzLinkCommand, NavigateSqzLinkDto>
     {
         private readonly ISqzToDbContext _context;
 
-        public NavigateToCommandHandler(ISqzToDbContext context)
+        public NavigateSqzLinkCommandHandler(ISqzToDbContext context)
         {
             _context = context;
         }
 
-        public async Task<string> Handle(NavigateToCommand request, CancellationToken cancellationToken)
+        public async Task<NavigateSqzLinkDto> Handle(NavigateSqzLinkCommand request, CancellationToken cancellationToken)
         {
-            var existingUrl = await _context.ShortUrls.FirstOrDefaultAsync(url => url.Route == request.Route);
+            var existingUrl = await _context.SqzLinks.FirstOrDefaultAsync(url => url.Route == request.Route);
             if (existingUrl == null)
             {
                 throw new NotFoundException();
@@ -27,7 +27,7 @@ namespace SqzTo.Application.CQS.ShortUrl.Commands.NavigateToUrl
             existingUrl.Clicks++;
             var savingResult = await _context.SaveChangesAsync(cancellationToken);
 
-            return existingUrl.OriginalUrl;
+            return new NavigateSqzLinkDto { Url = existingUrl.OriginalUrl };
         }
     }
 }
