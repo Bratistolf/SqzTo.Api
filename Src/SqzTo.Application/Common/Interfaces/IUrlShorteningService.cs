@@ -4,6 +4,6 @@ namespace SqzTo.Application.Common.Interfaces
 {
     public interface IUrlShorteningService
     {
-        string ShortenUrl(ShortUrl url);
+        string ShortenUrl(string url);
     }
 }

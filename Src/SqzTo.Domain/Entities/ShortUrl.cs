@@ -2,7 +2,7 @@
 
 namespace SqzTo.Domain.Entities
 {
-    public class ShortUrl
+    public class SqzLink
     {
         public int ShortUrlId { get; set; }
         public string Route { get; set; }

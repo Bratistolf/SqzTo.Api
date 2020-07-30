@@ -19,7 +19,8 @@
     },
     "SqzTo": {
       "commandName": "Project",
-      "launchUrl": "api/",
+      "launchBrowser": true,
+      "launchUrl": "swagger/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

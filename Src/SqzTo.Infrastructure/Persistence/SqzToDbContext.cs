@@ -9,7 +9,7 @@ namespace SqzTo.Infrastructure.Persistence
 {
     public class SqzToDbContext : DbContext, ISqzToDbContext
     {
-        public DbSet<ShortUrl> ShortUrls { get; set; }
+        public DbSet<SqzLink> SqzLinks { get; set; }
 
         public SqzToDbContext(DbContextOptions<SqzToDbContext> options) : base(options)
         {
@@ -17,7 +17,7 @@ namespace SqzTo.Infrastructure.Persistence
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries<ShortUrl>())
+            foreach (var entry in ChangeTracker.Entries<SqzLink>())
             {
                 //TODO: Proper state modifier...
                 //entry.Entity.Created = DateTime.Now;
