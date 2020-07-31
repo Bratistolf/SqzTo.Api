@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,8 +22,14 @@ namespace SqzTo.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddApiVersioning(opt => 
+            {
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.ReportApiVersions = true;
+            });
 
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            services.AddCors(opt => opt.AddPolicy("DevCORSPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
@@ -43,7 +50,7 @@ namespace SqzTo.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("MyPolicy");
+            app.UseCors("DevCORSPolicy");
 
             app.UseHttpsRedirection();
 

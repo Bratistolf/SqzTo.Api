@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace SqzTo.Api.Controllers.V1
 {
+    [ApiVersion("1.0")]
+    [Produces("application/json")]
     public class SqzLinkController : SqzToController
     {
         /// <summary>
@@ -18,6 +20,8 @@ namespace SqzTo.Api.Controllers.V1
         /// <returns></returns>
         [HttpPost]
         [Route("")]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<string>> CreateSqzLink([FromBody] CreateSqzLinkCommand createSqzLinkCommand)
         {
             return await Mediator.Send(createSqzLinkCommand);
@@ -30,6 +34,8 @@ namespace SqzTo.Api.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("{route}")]
+        [ProducesResponseType(typeof(NavigateSqzLinkDto), 200)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<NavigateSqzLinkDto>> NavigateSqzLink([FromRoute] string route)
         {
             return await Mediator.Send(new NavigateSqzLinkCommand { Route = route });
@@ -42,6 +48,8 @@ namespace SqzTo.Api.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("{route}/qr")]
+        [ProducesResponseType(typeof(GetSqzLinkQrDto), 200)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<GetSqzLinkQrDto>> GetSqzLinkQr([FromRoute] string route)
         {
             return BadRequest();
@@ -54,6 +62,8 @@ namespace SqzTo.Api.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("{route}/clicks")]
+        [ProducesResponseType(typeof(GetSqzLinkClicksDto), 200)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<GetSqzLinkClicksDto>> GetSqzLinkClicks([FromRoute] string route)
         {
             return await Mediator.Send(new GetSqzLinkClicksQuery { Route = route });
@@ -66,6 +76,8 @@ namespace SqzTo.Api.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("{route}/details")]
+        [ProducesResponseType(typeof(GetSqzLinkDetailsDto), 200)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<GetSqzLinkDetailsDto>> GetSqzLinkDetails([FromRoute] string route)
         {
             return await Mediator.Send(new GetSqzLinkDetailsQuery { Route = route });
@@ -78,6 +90,8 @@ namespace SqzTo.Api.Controllers.V1
         /// <returns></returns>
         [HttpPatch]
         [Route("{route}")]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult> UpdateSqzLink([FromRoute] string route, [FromBody] UpdateSqzLinkCommand updateSqzLinkCommand)
         {
             //TODO: ...

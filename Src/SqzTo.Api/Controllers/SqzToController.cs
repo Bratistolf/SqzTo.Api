@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace SqzTo.Api.Controllers
 {
     [ApiController]
-    [Route("v1/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [AdvertiseApiVersions("1.0")]
     public abstract class SqzToController : ControllerBase
     {
         private IMediator _mediator;
