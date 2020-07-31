@@ -14,11 +14,11 @@ const SqzLinkCreator = ({
         <div className = "main-url-creater">
             <Block>
                 <Input placeholder = "ВВЕДИТЕ СВОЙ URL" value = {inputValue} onChange = {onChangeInput}/>
+                <Button onClick = {sendUrl}>
+                СОКРАТИТЬ
+                </Button>
                 <Links  links = {sqzLinks}/>
             </Block>
-            <Button onClick = {sendUrl}>
-                СОКРАТИТЬ
-            </Button>
         </div>
     );
 }

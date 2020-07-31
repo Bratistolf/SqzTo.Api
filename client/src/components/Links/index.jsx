@@ -14,7 +14,7 @@ const Links = ({links}) => {
                         url = {link.sqzLink}
                         longUrl = {link.longLink}
                     />
-                )): 'haha'}
+                )): null}
         </div>
     );
 }
