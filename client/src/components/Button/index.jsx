@@ -7,7 +7,7 @@ const Button = props => {
     return (
         <button 
             {...props}
-        className = "btn-sbmt"/>
+        className = "btn"/>
     );
 }
 

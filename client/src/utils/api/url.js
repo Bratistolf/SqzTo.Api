@@ -2,7 +2,8 @@ import { axios } from "core";
 
 
 export default {
-    getSqzLink: ({url}) => axios.post("/api/Url",{
-        url: url,
-    }),
+    createSqzLink: ({url}) => 
+        axios.post("/v1/sqzlink", {url}),
+    getSqzLink: route => 
+        axios.get("/v1/sqzlink/"+ route)   
 };
