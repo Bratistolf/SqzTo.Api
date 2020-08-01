@@ -1,4 +1,4 @@
-﻿namespace SqzTo.Application.CQRS.SqzLink.Queries.GetSqzLinkDetails
+﻿namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkDetails
 {
     public class GetSqzLinkDetailsDto
     {

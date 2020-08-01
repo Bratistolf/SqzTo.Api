@@ -1,4 +1,4 @@
-﻿namespace SqzTo.Application.CQRS.SqzLink.Commands.NavigateSqzLink
+﻿namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.NavigateSqzLink
 {
     public class NavigateSqzLinkDto
     {

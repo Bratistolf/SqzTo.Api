@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SqzTo.Api</name>
+    </assembly>
+    <members>
+        <member name="T:SqzTo.Api.Controllers.V1.SqzLinkController">
+            <summary>
+            Primary SqzLink controller.
+            </summary>
+        </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.CreateSqzLink(SqzTo.Application.CQRS.V1.SqzLink.Commands.CreateSqzLink.CreateSqzLinkCommand)">
+            <summary>
+            Converts a long url into a SqzLink.
+            </summary>
+            <param name="createSqzLinkCommand"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.NavigateSqzLink(System.String)">
+            <summary>
+            Returns original url by SqzLink route.
+            </summary>
+            <param name="sqzlink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.GetSqzLinkQr(System.String)">
+            <summary>
+            Generates a QR code for a SqzLink.
+            </summary>
+            <param name="sqzlink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.GetSqzLinkClicks(System.String)">
+            <summary>
+            Returns the click counts for a specified SqzLink.
+            </summary>
+            <param name="sqzlink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.GetSqzLinkDetails(System.String)">
+            <summary>
+            Returns public information for a SqzLink.
+            </summary>
+            <param name="sqzlink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.EditDestinationUrl(System.String,SqzTo.Application.CQRS.V1.SqzLink.Commands.UpdateSqzLink.EditDestinationUrlCommand)">
+            <summary>
+            Edit destination URL for a SqzLink.
+            </summary>
+            <param name="sqzlink"></param>
+            <param name="updateSqzLinkCommand"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqzTo.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Startup init.
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:SqzTo.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:SqzTo.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app">Application request pipeline builder</param>
+            <param name="env">Web host environment provider</param>
+        </member>
+    </members>
+</doc>

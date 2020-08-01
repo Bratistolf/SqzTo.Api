@@ -1,4 +1,4 @@
-﻿using SqzTo.Application.Common.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -6,21 +6,23 @@ using System.Text;
 namespace SqzTo.Application.Common.Services.UrlShorteners
 {
     // That hash encryption may generate collisions in the DB. We should use counter system for better sustainability!
-    public class MD5UrlShorteningService : IUrlShorteningService
+    public class MD5UrlShorteningService : BaseUrlShorteningService
     {
-        private readonly string Base62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public MD5UrlShorteningService(IConfiguration configuration) : base(configuration)
+        {
+        }
 
-        public string ShortenUrl(string url)
+        public override string ShortenUrl(string url)
         {
             var hash = GetMD5Hash(url);
 
-            var builder = new StringBuilder();
+            var sqzLinkBuilder = new StringBuilder();
             for (var i = 0; i < 7; i++)
             {
-                builder.Append(Base62[hash[i]]);
+                sqzLinkBuilder.Append(LatinBase[hash[i]]);
             }
 
-            return builder.ToString();
+            return BuildSqzLink(sqzLinkBuilder.ToString());
         }
 
         private byte[] GetMD5Hash(string input)

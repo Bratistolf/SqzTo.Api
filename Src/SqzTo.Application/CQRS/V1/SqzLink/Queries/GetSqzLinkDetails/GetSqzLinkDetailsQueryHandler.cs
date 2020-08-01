@@ -1,11 +1,12 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SqzTo.Application.Common.Exceptions;
 using SqzTo.Application.Common.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SqzTo.Application.CQRS.SqzLink.Queries.GetSqzLinkDetails
+namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkDetails
 {
     public class GetSqzLinkDetailsQueryHandler : IRequestHandler<GetSqzLinkDetailsQuery, GetSqzLinkDetailsDto>
     {
@@ -18,12 +19,18 @@ namespace SqzTo.Application.CQRS.SqzLink.Queries.GetSqzLinkDetails
 
         public async Task<GetSqzLinkDetailsDto> Handle(GetSqzLinkDetailsQuery request, CancellationToken cancellationToken)
         {
-            var sqzLink = await _context.SqzLinks.FirstOrDefaultAsync(link => link.Route == request.Route);
+            var route = request.Link;
+
+            var sqzLink = await _context.SqzLinks.FirstOrDefaultAsync(link => link.SqzLink == route);
+            if (sqzLink == null)
+            {
+                throw new NotFoundException($"SqzLink with the route '{route}' is not found");
+            }
 
             var dto = new GetSqzLinkDetailsDto
             {
-                Link = sqzLink.Route,
-                Url = sqzLink.OriginalUrl,
+                Link = sqzLink.SqzLink,
+                Url = sqzLink.DestinationUrl,
                 Clicks = sqzLink.Clicks,
                 Created = sqzLink.Created.ToString()
             };

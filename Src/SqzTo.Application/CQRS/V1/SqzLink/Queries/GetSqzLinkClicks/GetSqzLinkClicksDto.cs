@@ -1,4 +1,4 @@
-﻿namespace SqzTo.Application.CQRS.SqzLink.Queries.GetSqzLinkClicks
+﻿namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkClicks
 {
     public class GetSqzLinkClicksDto
     {

@@ -5,7 +5,7 @@ using SqzTo.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SqzTo.Application.CQRS.SqzLink.Commands.NavigateSqzLink
+namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.NavigateSqzLink
 {
     public class NavigateSqzLinkCommandHandler : IRequestHandler<NavigateSqzLinkCommand, NavigateSqzLinkDto>
     {
@@ -18,16 +18,18 @@ namespace SqzTo.Application.CQRS.SqzLink.Commands.NavigateSqzLink
 
         public async Task<NavigateSqzLinkDto> Handle(NavigateSqzLinkCommand request, CancellationToken cancellationToken)
         {
-            var existingUrl = await _context.SqzLinks.FirstOrDefaultAsync(url => url.Route == request.Route);
+            var route = request.Link;
+
+            var existingUrl = await _context.SqzLinks.FirstOrDefaultAsync(url => url.SqzLink == route);
             if (existingUrl == null)
             {
-                throw new NotFoundException();
+                throw new NotFoundException($"SqzLink with the route '{route}' is not found");
             }
 
             existingUrl.Clicks++;
             var savingResult = await _context.SaveChangesAsync(cancellationToken);
 
-            return new NavigateSqzLinkDto { Url = existingUrl.OriginalUrl };
+            return new NavigateSqzLinkDto { Url = existingUrl.DestinationUrl };
         }
     }
 }

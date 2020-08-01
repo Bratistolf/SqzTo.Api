@@ -9,7 +9,7 @@ namespace SqzTo.Infrastructure.Persistence
 {
     public class SqzToDbContext : DbContext, ISqzToDbContext
     {
-        public DbSet<SqzLink> SqzLinks { get; set; }
+        public DbSet<SqzLinkEntity> SqzLinks { get; set; }
 
         public SqzToDbContext(DbContextOptions<SqzToDbContext> options) : base(options)
         {
@@ -17,7 +17,7 @@ namespace SqzTo.Infrastructure.Persistence
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries<SqzLink>())
+            foreach (var entry in ChangeTracker.Entries<SqzLinkEntity>())
             {
                 //TODO: Proper state modifier...
                 //entry.Entity.Created = DateTime.Now;
