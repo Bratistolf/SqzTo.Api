@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SqzTo.Application.Common.Interfaces;
-using System.Linq;
 
 namespace SqzTo.Application.Common.Services.UrlShorteners
 {
@@ -19,7 +18,7 @@ namespace SqzTo.Application.Common.Services.UrlShorteners
 
         public abstract string ShortenUrl(string url);
 
-        protected string BuildSqzLink(string sqzLinkKey)
+        protected string BuildSqzLink(string path)
         {
             var domains = _configuration.GetSection("Domains");
             string domain;
@@ -33,7 +32,7 @@ namespace SqzTo.Application.Common.Services.UrlShorteners
                 domain = domains.GetValue<string>("Latin");
             }
 
-            return "https://" + domain + "/" + sqzLinkKey;
+            return path;
         }
     }
 }

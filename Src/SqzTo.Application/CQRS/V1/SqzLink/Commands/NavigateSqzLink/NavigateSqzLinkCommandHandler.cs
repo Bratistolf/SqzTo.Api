@@ -18,18 +18,18 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.NavigateSqzLink
 
         public async Task<NavigateSqzLinkDto> Handle(NavigateSqzLinkCommand request, CancellationToken cancellationToken)
         {
-            var route = request.Link;
+            var sqzLink = request.SqzLink;
 
-            var existingUrl = await _context.SqzLinks.FirstOrDefaultAsync(url => url.SqzLink == route);
-            if (existingUrl == null)
+            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(entity => (entity.Domain + "%2F" + entity.Path) == sqzLink);
+            if (sqzLinkEntity == null)
             {
-                throw new NotFoundException($"SqzLink with the route '{route}' is not found");
+                throw new NotFoundException($"SqzLink \"{sqzLink}\" was not found.");
             }
 
-            existingUrl.Clicks++;
+            sqzLinkEntity.Clicks++;
             var savingResult = await _context.SaveChangesAsync(cancellationToken);
 
-            return new NavigateSqzLinkDto { Url = existingUrl.DestinationUrl };
+            return new NavigateSqzLinkDto { DestinationUrl = sqzLinkEntity.DestinationUrl };
         }
     }
 }

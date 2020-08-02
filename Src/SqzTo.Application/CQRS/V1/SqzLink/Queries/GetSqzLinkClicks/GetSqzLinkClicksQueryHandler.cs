@@ -18,15 +18,15 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkClicks
 
         public async Task<GetSqzLinkClicksDto> Handle(GetSqzLinkClicksQuery request, CancellationToken cancellationToken)
         {
-            var route = request.SqzLink;
+            var sqzLink = request.SqzLink;
 
-            var sqzLink = await _context.SqzLinks.FirstOrDefaultAsync(link => link.SqzLink == request.SqzLink);
-            if (sqzLink == null)
+            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(entity => entity.Domain + "%2F" + entity.Path == request.SqzLink);
+            if (sqzLinkEntity == null)
             {
-                throw new NotFoundException($"SqzLink with the route '{route}' is not found");
+                throw new NotFoundException($"SqzLink \"{sqzLink}\" was not found.");
             }
 
-            return new GetSqzLinkClicksDto { Clicks = sqzLink.Clicks };
+            return new GetSqzLinkClicksDto { Clicks = sqzLinkEntity.Clicks };
         }
     }
 }

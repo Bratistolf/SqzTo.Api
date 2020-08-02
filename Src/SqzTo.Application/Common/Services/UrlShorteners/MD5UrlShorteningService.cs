@@ -15,23 +15,23 @@ namespace SqzTo.Application.Common.Services.UrlShorteners
         public override string ShortenUrl(string url)
         {
             var hash = GetMD5Hash(url);
+            var joined = LatinBase + NumericBase;
 
             var sqzLinkBuilder = new StringBuilder();
             for (var i = 0; i < 7; i++)
             {
-                sqzLinkBuilder.Append(LatinBase[hash[i]]);
+                sqzLinkBuilder.Append(joined[hash[i]]);
             }
 
-            return BuildSqzLink(sqzLinkBuilder.ToString());
+            return sqzLinkBuilder.ToString();
         }
 
         private byte[] GetMD5Hash(string input)
         {
-            // Use input string to calculate MD5 hash
             using (var md5 = MD5.Create())
             {
-                byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
+                var inputBytes = Encoding.ASCII.GetBytes(input);
+                var hashBytes = md5.ComputeHash(inputBytes);
 
                 return Base62Convert(hashBytes);
             }
@@ -40,7 +40,7 @@ namespace SqzTo.Application.Common.Services.UrlShorteners
         private byte[] Base62Convert(byte[] source)
         {
             var result = new List<int>();
-            var count = 0;
+            int count;
             while ((count = source.Length) > 0)
             {
                 var quotient = new List<byte>();

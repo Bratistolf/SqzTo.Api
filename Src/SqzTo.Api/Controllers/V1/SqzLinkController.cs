@@ -35,7 +35,7 @@ namespace SqzTo.Api.Controllers.V1
             return await Mediator.Send(createSqzLinkCommand);
         }
 
-        // GET: v1.0/sqzlink/{route}
+        // GET: v1.0/sqzlink/{sqzlink}
         /// <summary>
         /// Returns original url by SqzLink route.
         /// </summary>
@@ -50,10 +50,10 @@ namespace SqzTo.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public async Task<ActionResult<NavigateSqzLinkDto>> NavigateSqzLink([FromRoute] string sqzlink)
         {
-            return await Mediator.Send(new NavigateSqzLinkCommand { Link = sqzlink });
+            return await Mediator.Send(new NavigateSqzLinkCommand { SqzLink = sqzlink });
         }
 
-        // GET: v1.0/sqzlink/{route}/qr
+        // GET: v1.0/sqzlink/{sqzlink}/qr
         /// <summary>
         /// Generates a QR code for a SqzLink.
         /// </summary>
@@ -68,10 +68,10 @@ namespace SqzTo.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public async Task<ActionResult<GetSqzLinkQrDto>> GetSqzLinkQr([FromRoute] string sqzlink)
         {
-            return BadRequest();
+            return await Mediator.Send(new GetSqzLinkQrQuery { SqzLink = sqzlink });
         }
 
-        // GET: v1.0/sqzlink/ 
+        // GET: v1.0/sqzlink/{sqzlink}/clicks
         /// <summary>
         /// Returns the click counts for a specified SqzLink.
         /// </summary>
@@ -90,7 +90,7 @@ namespace SqzTo.Api.Controllers.V1
             return await Mediator.Send(new GetSqzLinkClicksQuery { SqzLink = sqzlink });
         }
 
-        // GET: v1.0/sqzlink/{route}/details
+        // GET: v1.0/sqzlink/{sqzlink}/details
         /// <summary>
         /// Returns public information for a SqzLink.
         /// </summary>
@@ -106,10 +106,10 @@ namespace SqzTo.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public async Task<ActionResult<GetSqzLinkDetailsDto>> GetSqzLinkDetails([FromRoute] string sqzlink)
         {
-            return await Mediator.Send(new GetSqzLinkDetailsQuery { Link = sqzlink });
+            return await Mediator.Send(new GetSqzLinkDetailsQuery { SqzLink = sqzlink });
         }
 
-        // PATCH: v1.0/sqzlink/{route}
+        // PATCH: v1.0/sqzlink/{sqzlink}
         /// <summary>
         /// Edit destination URL for a SqzLink.
         /// </summary>
@@ -127,6 +127,25 @@ namespace SqzTo.Api.Controllers.V1
         public async Task<ActionResult<Unit>> EditDestinationUrl([FromRoute] string sqzlink, [FromBody] EditDestinationUrlCommand updateSqzLinkCommand)
         {
             return await Mediator.Send(updateSqzLinkCommand);
+        }
+
+        // PATCH: v1.0/sqzlink/{sqzlink}/expiration
+        /// <summary>
+        /// Sets up an expiration date for a SqzLink.
+        /// </summary>
+        /// <param name="sqzlink"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("{sqzlink}/expiration")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        public async Task<ActionResult> SetupLinkExpiration([FromRoute] string sqzlink)
+        {
+            return NoContent();
         }
     }
 }

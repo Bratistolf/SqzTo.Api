@@ -52,6 +52,13 @@
             <param name="updateSqzLinkCommand"></param>
             <returns></returns>
         </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.SetupLinkExpiration(System.String)">
+            <summary>
+            Sets up an expiration date for a SqzLink.
+            </summary>
+            <param name="sqzlink"></param>
+            <returns></returns>
+        </member>
         <member name="M:SqzTo.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Startup init.

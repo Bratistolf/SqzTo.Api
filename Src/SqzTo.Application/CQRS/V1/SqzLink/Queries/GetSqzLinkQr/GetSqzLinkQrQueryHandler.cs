@@ -19,12 +19,12 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkQr
 
         public async Task<GetSqzLinkQrDto> Handle(GetSqzLinkQrQuery request, CancellationToken cancellationToken)
         {
-            var route = request.Link;
+            var sqzLink = request.SqzLink;
 
-            var sqzLink = await _context.SqzLinks.FirstOrDefaultAsync(link => link.SqzLink == route);
-            if (sqzLink == null)
+            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(entity => (entity.Domain + '/' + entity.Path) == sqzLink);
+            if (sqzLinkEntity == null)
             {
-                throw new NotFoundException($"SqzLink with the route '{route}' is not found");
+                throw new NotFoundException($"SqzLink \"{sqzLink}\" was not found.");
             }
 
             throw new NotImplementedException();

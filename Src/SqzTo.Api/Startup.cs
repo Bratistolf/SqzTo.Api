@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SqzTo.Api.Filters;
 using SqzTo.Application;
 using SqzTo.Infrastructure;
 
@@ -29,7 +30,8 @@ namespace SqzTo.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(opt => opt.Filters.Add(new ApiExceptionFilter()));
+
             services.AddApiVersioning(opt => 
             {
                 opt.DefaultApiVersion = new ApiVersion(1, 0);
