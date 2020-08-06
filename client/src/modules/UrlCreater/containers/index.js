@@ -22,19 +22,25 @@ const SqzLinkContainer = () => {
                 })
                 .then(({data})=>{
 
-                    let link = {
+                    addSqzLink([...sqzLinks, { 
                         hash: data,
                         sqzLink: "localhost:3000/v1/sqzlink/" + data,
-                        longLink: inputValue
-                    };
+                        longLink: inputValue    
+                        }
+                    ])
+                    // let link = {
+                    //     hash: data,
+                    //     sqzLink: "localhost:3000/v1/sqzlink/" + data,
+                    //     longLink: inputValue
+                    // };
 
-                    if (sqzLinks.length < 3){
-                        addSqzLink(sqzLinks.concat(link));
-                        console.log(sqzLinks);
-                    } else {
-                        console.log(sqzLinks);
-                        addSqzLink(sqzLinks.splice(0,1).concat(link))
-                    }
+                    // if (sqzLinks.length < 3){
+                    //     addSqzLink(sqzLinks.concat(link));
+                       console.log(sqzLinks);
+                    // } else {
+                    //     console.log(sqzLinks);
+                    //     addSqzLink(sqzLinks.splice(0,1).concat(link))
+                    // }
                 })
                 .catch((err) => console.error(err))
         
