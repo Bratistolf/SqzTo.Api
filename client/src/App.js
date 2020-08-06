@@ -1,15 +1,27 @@
 import React, {Component} from 'react';
+import { Route, Redirect, Switch } from "react-router-dom";
 
-import {Home} from "pages";
+import {Home, Auth} from "pages";
 
-class App extends Component {
-  render() {
-      return (
-        <div className="wrapper">
-          <Home/>
-        </div>
-      );
-  }
-}
+const App = props => {
+  const  isAuth  = true;
+  return (
+    <div className="wrapper">
+      <Switch>
+        <Route
+          exact
+          path={["/signin", "/signup", "/signup/verify"]}
+          component={Auth}
+        />
+        <Route
+          path="/"
+          component = {Home}
+          //render={() => (isAuth ? <Home /> : <Redirect to="/signin" />)}
+        />
+      </Switch>
+    </div>
+  );
+};
+
 
 export default App;
