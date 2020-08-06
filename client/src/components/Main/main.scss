@@ -13,5 +13,13 @@
         display: flex;
         flex-direction: row;
         width: 80%;
+        span{
+            margin: -14px auto;
+            color: rgb(226, 35, 35);
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 28px;
+        }
     }
 }

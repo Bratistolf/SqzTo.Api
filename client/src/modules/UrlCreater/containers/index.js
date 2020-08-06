@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {urlApi} from 'utils/api';
+import {validator} from 'utils/validations'
 
 import {SqzLinkCreator as BaseSqzLinkCreator} from "../components/SqzLinkCreator";
 
 const SqzLinkContainer = () => {
-    
+    const [validationErr, setValidationErr] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [sqzLinks, addSqzLink] = useState([])
 
@@ -15,8 +16,10 @@ const SqzLinkContainer = () => {
 
     
     const onSendUrl = () => {
-        if(inputValue != "")
-            urlApi
+        console.log(validator.checkUrl(inputValue));
+        if(inputValue != "" && validator.checkUrl(inputValue)){
+                setValidationErr(false);
+                urlApi
                 .createSqzLink({
                     url: inputValue
                 })
@@ -43,12 +46,15 @@ const SqzLinkContainer = () => {
                     // }
                 })
                 .catch((err) => console.error(err))
-        
+        } else {
+            setValidationErr(true);
+        }
     };
 
 
     return (
         <BaseSqzLinkCreator
+            err = {validationErr}
             sendUrl = {onSendUrl}
             inputValue = {inputValue}
             onChangeInput = {handleChangeInput}

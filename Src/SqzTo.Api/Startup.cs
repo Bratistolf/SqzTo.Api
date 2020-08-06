@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SqzTo.Api.Filters;
 using SqzTo.Application;
 using SqzTo.Infrastructure;
 
@@ -11,17 +12,26 @@ namespace SqzTo.Api
 {
     public class Startup
     {
+        /// <summary>
+        /// Startup init.
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(opt => opt.Filters.Add(new ApiExceptionFilter()));
+
             services.AddApiVersioning(opt => 
             {
                 opt.DefaultApiVersion = new ApiVersion(1, 0);
@@ -43,6 +53,11 @@ namespace SqzTo.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app">Application request pipeline builder</param>
+        /// <param name="env">Web host environment provider</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

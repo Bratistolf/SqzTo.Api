@@ -1,4 +1,4 @@
-﻿using SqzTo.Application.Common.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -6,30 +6,32 @@ using System.Text;
 namespace SqzTo.Application.Common.Services.UrlShorteners
 {
     // That hash encryption may generate collisions in the DB. We should use counter system for better sustainability!
-    public class MD5UrlShorteningService : IUrlShorteningService
+    public class MD5UrlShorteningService : BaseUrlShorteningService
     {
-        private readonly string Base62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public MD5UrlShorteningService(IConfiguration configuration) : base(configuration)
+        {
+        }
 
-        public string ShortenUrl(string url)
+        public override string ShortenUrl(string url)
         {
             var hash = GetMD5Hash(url);
+            var joined = LatinBase + NumericBase;
 
-            var builder = new StringBuilder();
+            var sqzLinkBuilder = new StringBuilder();
             for (var i = 0; i < 7; i++)
             {
-                builder.Append(Base62[hash[i]]);
+                sqzLinkBuilder.Append(joined[hash[i]]);
             }
 
-            return builder.ToString();
+            return sqzLinkBuilder.ToString();
         }
 
         private byte[] GetMD5Hash(string input)
         {
-            // Use input string to calculate MD5 hash
             using (var md5 = MD5.Create())
             {
-                byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
+                var inputBytes = Encoding.ASCII.GetBytes(input);
+                var hashBytes = md5.ComputeHash(inputBytes);
 
                 return Base62Convert(hashBytes);
             }
@@ -38,7 +40,7 @@ namespace SqzTo.Application.Common.Services.UrlShorteners
         private byte[] Base62Convert(byte[] source)
         {
             var result = new List<int>();
-            var count = 0;
+            int count;
             while ((count = source.Length) > 0)
             {
                 var quotient = new List<byte>();

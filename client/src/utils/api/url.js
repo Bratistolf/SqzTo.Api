@@ -1,6 +1,8 @@
 import { axios } from "core";
 
 
+
+
 export default {
     createSqzLink: ({url}) => 
         axios.post("/v1/sqzlink", {url}),
