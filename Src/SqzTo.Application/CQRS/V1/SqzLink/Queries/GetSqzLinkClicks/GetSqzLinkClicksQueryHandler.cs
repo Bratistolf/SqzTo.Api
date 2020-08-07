@@ -18,12 +18,14 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkClicks
 
         public async Task<GetSqzLinkClicksDto> Handle(GetSqzLinkClicksQuery request, CancellationToken cancellationToken)
         {
-            var sqzLink = request.SqzLink;
+            var sqzLinkSplit = request.SqzLink.Split(new string[] { "%2F", "/" }, System.StringSplitOptions.None);
+            var domain = sqzLinkSplit[0];
+            var path = sqzLinkSplit[1];
 
-            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(entity => entity.Domain + "%2F" + entity.Path == request.SqzLink);
+            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(entity => entity.Domain == domain && entity.Path == path);
             if (sqzLinkEntity == null)
             {
-                throw new NotFoundException($"SqzLink \"{sqzLink}\" was not found.");
+                throw new NotFoundException($"SqzLink \"{domain + '/' + path}\" was not found.");
             }
 
             return new GetSqzLinkClicksDto { Clicks = sqzLinkEntity.Clicks };

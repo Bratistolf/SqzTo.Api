@@ -4,12 +4,18 @@
         <name>SqzTo.Api</name>
     </assembly>
     <members>
+        <member name="M:SqzTo.Api.Common.ObjectResults.NotImplementedObjectResult.#ctor(System.Object)">
+            <summary>
+            Creates a new NotImplementedObjectResult instance.
+            </summary>
+            <param name="value">The value to format in the entity body.</param>
+        </member>
         <member name="T:SqzTo.Api.Controllers.V1.SqzLinkController">
             <summary>
             Primary SqzLink controller.
             </summary>
         </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.CreateSqzLink(SqzTo.Application.CQRS.V1.SqzLink.Commands.CreateSqzLink.CreateSqzLinkCommand)">
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.CreateSqzLink(SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateCommand)">
             <summary>
             Converts a long url into a SqzLink.
             </summary>
@@ -44,12 +50,20 @@
             <param name="sqzlink"></param>
             <returns></returns>
         </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.EditDestinationUrl(System.String,SqzTo.Application.CQRS.V1.SqzLink.Commands.UpdateSqzLink.EditDestinationUrlCommand)">
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.EditDestinationUrl(System.String,SqzTo.Application.CQRS.V1.SqzLink.Commands.EditDestinationUrl.EditDestinationUrlCommand)">
             <summary>
             Edit destination URL for a SqzLink.
             </summary>
             <param name="sqzlink"></param>
             <param name="updateSqzLinkCommand"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.EditSqzLinkDescription(System.String,SqzTo.Application.CQRS.V1.SqzLink.Commands.EditDescription.EditDescriptionCommand)">
+            <summary>
+            
+            </summary>
+            <param name="sqzlink"></param>
+            <param name="editSqzLinkDescriptionCommand"></param>
             <returns></returns>
         </member>
         <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.SetupLinkExpiration(System.String)">

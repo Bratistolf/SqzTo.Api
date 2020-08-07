@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using SqzTo.Api.Common.ObjectResults;
 using SqzTo.Application.Common.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -86,7 +87,7 @@ namespace SqzTo.Api.Filters
                 Detail = exception.Message
             };
 
-            context.Result = new NotFoundObjectResult(details);
+            context.Result = new NotImplementedObjectResult(details);
 
             context.ExceptionHandled = true;
         }

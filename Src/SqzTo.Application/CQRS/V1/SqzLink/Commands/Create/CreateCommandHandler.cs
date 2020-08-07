@@ -3,20 +3,20 @@ using SqzTo.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.CreateSqzLink
+namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Create
 {
-    public class CreateSqzLinkCommandHandler : IRequestHandler<CreateSqzLinkCommand, CreateSqzLinkDto>
+    public class CreateCommandHandler : IRequestHandler<CreateCommand, CreateDto>
     {
         private readonly ISqzToDbContext _context;
         private readonly IUrlShorteningService _urlShorteningService;
 
-        public CreateSqzLinkCommandHandler(ISqzToDbContext context, IUrlShorteningService urlShorteningService)
+        public CreateCommandHandler(ISqzToDbContext context, IUrlShorteningService urlShorteningService)
         {
             _context = context;
             _urlShorteningService = urlShorteningService;
         }
 
-        public async Task<CreateSqzLinkDto> Handle(CreateSqzLinkCommand request, CancellationToken cancellationToken)
+        public async Task<CreateDto> Handle(CreateCommand request, CancellationToken cancellationToken)
         {
             var destinationUrl = request.DestinationUrl;
             var domain = request.Domain == string.Empty ? "bit.ly" : request.Domain;
@@ -32,7 +32,7 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.CreateSqzLink
             _context.SqzLinks.Add(sqzLinkEntity);
             var savingResult = await _context.SaveChangesAsync(cancellationToken);
 
-            return new CreateSqzLinkDto { SqzLink = sqzLinkEntity.Domain + '/' + sqzLinkEntity.Path };
+            return new CreateDto { SqzLink = sqzLinkEntity.Domain + '/' + sqzLinkEntity.Path };
         }
     }
 }

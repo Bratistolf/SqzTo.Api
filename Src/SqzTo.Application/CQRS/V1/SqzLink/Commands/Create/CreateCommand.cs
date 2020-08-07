@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using System.Text.Json.Serialization;
 
-namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.CreateSqzLink
+namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Create
 {
-    public partial class CreateSqzLinkCommand : IRequest<CreateSqzLinkDto>
+    public partial class CreateCommand : IRequest<CreateDto>
     {
         [JsonPropertyName("domain")]
         public string Domain { get; set; }

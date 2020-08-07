@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using SqzTo.Api.Filters;
 using SqzTo.Application;
 using SqzTo.Infrastructure;
+using SqzTo.Infrastructure.Identity;
 
 namespace SqzTo.Api
 {
@@ -46,6 +48,10 @@ namespace SqzTo.Api
                        .AllowAnyHeader();
             }));
 
+
+            // TODO: Add IdentityUser implementation
+            //services.AddIdentityCore<SqzToUser>();
+
             services.AddApplication();
             services.AddInfrastructure(Configuration);
 
@@ -75,7 +81,7 @@ namespace SqzTo.Api
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
-            app.UseReDoc();
+            //app.UseReDoc();
 
             app.UseEndpoints(endpoints =>
             {

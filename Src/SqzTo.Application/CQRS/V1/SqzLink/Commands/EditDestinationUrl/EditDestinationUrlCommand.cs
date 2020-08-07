@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Text.Json.Serialization;
 
-namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.UpdateSqzLink
+namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.EditDestinationUrl
 {
     public class EditDestinationUrlCommand : IRequest
     {

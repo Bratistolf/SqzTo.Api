@@ -1,12 +1,14 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SqzTo.Application.CQRS.V1.SqzLink.Commands.CreateSqzLink;
-using SqzTo.Application.CQRS.V1.SqzLink.Commands.NavigateSqzLink;
-using SqzTo.Application.CQRS.V1.SqzLink.Commands.UpdateSqzLink;
+using SqzTo.Application.CQRS.V1.SqzLink.Commands.Create;
+using SqzTo.Application.CQRS.V1.SqzLink.Commands.EditDescription;
+using SqzTo.Application.CQRS.V1.SqzLink.Commands.Navigate;
+using SqzTo.Application.CQRS.V1.SqzLink.Commands.EditDestinationUrl;
 using SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkClicks;
 using SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkDetails;
 using SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkQr;
+using System;
 using System.Threading.Tasks;
 
 namespace SqzTo.Api.Controllers.V1
@@ -26,11 +28,11 @@ namespace SqzTo.Api.Controllers.V1
         /// <returns></returns>
         [HttpPost]
         [Route("")]
-        [ProducesResponseType(typeof(CreateSqzLinkDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(CreateDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<ActionResult<CreateSqzLinkDto>> CreateSqzLink([FromBody] CreateSqzLinkCommand createSqzLinkCommand)
+        public async Task<ActionResult<CreateDto>> CreateSqzLink([FromBody] CreateCommand createSqzLinkCommand)
         {
             return await Mediator.Send(createSqzLinkCommand);
         }
@@ -43,14 +45,14 @@ namespace SqzTo.Api.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Route("{sqzlink}")]
-        [ProducesResponseType(typeof(NavigateSqzLinkDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(NavigateDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<ActionResult<NavigateSqzLinkDto>> NavigateSqzLink([FromRoute] string sqzlink)
+        public async Task<ActionResult<NavigateDto>> NavigateSqzLink([FromRoute] string sqzlink)
         {
-            return await Mediator.Send(new NavigateSqzLinkCommand { SqzLink = sqzlink });
+            return await Mediator.Send(new NavigateCommand { SqzLink = sqzlink });
         }
 
         // GET: v1.0/sqzlink/{sqzlink}/qr
@@ -123,10 +125,32 @@ namespace SqzTo.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<ActionResult<Unit>> EditDestinationUrl([FromRoute] string sqzlink, [FromBody] EditDestinationUrlCommand updateSqzLinkCommand)
+        public async Task<ActionResult> EditDestinationUrl([FromRoute] string sqzlink, [FromBody] EditDestinationUrlCommand updateSqzLinkCommand)
         {
-            return await Mediator.Send(updateSqzLinkCommand);
+            await Mediator.Send(updateSqzLinkCommand);
+            return new NoContentResult();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sqzlink"></param>
+        /// <param name="editSqzLinkDescriptionCommand"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("{sqzlink}/description")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        public async Task<ActionResult<Unit>> EditSqzLinkDescription([FromRoute] string sqzlink, [FromBody] EditDescriptionCommand editSqzLinkDescriptionCommand)
+        {
+            throw new NotImplementedException();
         }
 
         // PATCH: v1.0/sqzlink/{sqzlink}/expiration
