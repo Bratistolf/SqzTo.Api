@@ -4,7 +4,7 @@ import {validator} from 'utils/validations'
 
 import {SqzLinkCreator as BaseSqzLinkCreator} from "../components/SqzLinkCreator";
 
-const SqzLinkContainer = () => {
+const SqzLinkCreator = () => {
     const [validationErr, setValidationErr] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [sqzLinks, addSqzLink] = useState([])
@@ -63,4 +63,4 @@ const SqzLinkContainer = () => {
     );
 }
 
-export default SqzLinkContainer;
+export default SqzLinkCreator;
