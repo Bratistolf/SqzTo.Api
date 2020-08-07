@@ -14,10 +14,12 @@ const LinkItem = ({url, longUrl}) => {
     }
     return (
         <div className = "linkitem-content">
-            <b>
+            <span className = 'linkitem-content-originUrl'>
                 {longUrl}
-            </b>
-            <a href = {url}>{url}</a>
+            </span>
+            <a href = {url} className = 'linkitem-content-sqzLink'>
+                {url}
+            </a>
             <Button onClick = {copyFunc}>
                 {copySuccess}
             </Button>

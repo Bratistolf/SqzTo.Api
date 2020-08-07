@@ -7,6 +7,7 @@ const Links = ({links}) => {
     console.log(links);
     return (
         <div className = "links">
+            {links.length > 3? links.splice(0,1): null}     
             {links.length?
                 links.map(link =>(
                     <LinkItem

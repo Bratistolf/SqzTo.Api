@@ -2,13 +2,9 @@ import React, {Component} from "react"
 
 import "./input.scss"
 
-const Input = (props) => {
+const Input = props => {
     return (
-        <input 
-            {...props}
-        className = "input-url" >
-            
-        </input>
+        <input  className = 'input' {...props} />
     );
 }
 
