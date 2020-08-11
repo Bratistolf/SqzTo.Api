@@ -5,18 +5,26 @@ using SqzTo.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkClicks
+namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetClicks
 {
-    public class GetSqzLinkQrQueryHandler : IRequestHandler<GetSqzLinkClicksQuery, GetSqzLinkClicksDto>
+    public class GetClicksRequestHandler : IRequestHandler<GetClicksRequest, GetClicksResponce>
     {
         private readonly ISqzToDbContext _context;
 
-        public GetSqzLinkQrQueryHandler(ISqzToDbContext context)
+        public GetClicksRequestHandler(ISqzToDbContext context)
         {
             _context = context;
         }
 
-        public async Task<GetSqzLinkClicksDto> Handle(GetSqzLinkClicksQuery request, CancellationToken cancellationToken)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>TODO...</remarks>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException">Thrown when SqzLink is not found</exception>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        public async Task<GetClicksResponce> Handle(GetClicksRequest request, CancellationToken cancellationToken)
         {
             var sqzLinkSplit = request.SqzLink.Split(new string[] { "%2F", "/" }, System.StringSplitOptions.None);
             var domain = sqzLinkSplit[0];
@@ -28,7 +36,7 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkClicks
                 throw new NotFoundException($"SqzLink \"{domain + '/' + path}\" was not found.");
             }
 
-            return new GetSqzLinkClicksDto { Clicks = sqzLinkEntity.Clicks };
+            return new GetClicksResponce { Clicks = sqzLinkEntity.Clicks };
         }
     }
 }

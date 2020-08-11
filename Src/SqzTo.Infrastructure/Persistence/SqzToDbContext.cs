@@ -12,7 +12,9 @@ namespace SqzTo.Infrastructure.Persistence
     {
         public DbSet<SqzLinkEntity> SqzLinks { get; set; }
 
-        public SqzToDbContext(DbContextOptions<SqzToDbContext> options) : base(options)
+        public SqzToDbContext(
+            DbContextOptions<SqzToDbContext> options
+            ) : base(options)
         {
         }
 
@@ -20,6 +22,17 @@ namespace SqzTo.Infrastructure.Persistence
         {
             foreach (var entry in ChangeTracker.Entries<SqzLinkEntity>())
             {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.Created = DateTime.UtcNow;
+                        entry.Entity.CreatedBy = "";
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.LastModified = DateTime.UtcNow;
+                        entry.Entity.LastModifiedBy = "";
+                        break;
+                }
             }
 
             return base.SaveChangesAsync(cancellationToken);

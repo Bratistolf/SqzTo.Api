@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SqzTo.Application</name>
+    </assembly>
+    <members>
+        <member name="M:SqzTo.Application.Common.Mappings.MappingProfile.ApplyMappingsFromAssembly(System.Type[])">
+            <summary>
+            Load all types that implement interface <see cref="T:SqzTo.Application.Common.Mappings.Interfaces.IMapFrom`1"/>
+            and create a map between them and {T}
+            </summary>
+        </member>
+        <member name="M:SqzTo.Application.Common.Mappings.MappingProfile.RegisterReverseMappings(System.Type[])">
+            <summary>
+            Load all types that implement interface <see cref="T:SqzTo.Application.Common.Mappings.Interfaces.IMapTo`1"/>
+            and create a map between them and {T}
+            </summary>
+        </member>
+        <member name="M:SqzTo.Application.Common.Mappings.MappingProfile.RegisterCustomMappings(System.Type[])">
+            <summary>
+            Custom Mapping implementation
+            https://docs.automapper.org/en/stable/Configuration.html
+            </summary>
+            <param name="types"></param>
+        </member>
+        <member name="T:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateRequest">
+            <summary>
+            Request DTO for the POST:v1.0/sqzlink/ route.
+            </summary>
+        </member>
+        <member name="P:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateRequest.Domain">
+            <summary>
+            SqzLink's domain name.
+            </summary>
+            <example>sqz.to</example>
+        </member>
+        <member name="P:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateRequest.DestinationUrl">
+            <summary>
+            SqzLink's destination URL.
+            </summary>
+        </member>
+        <member name="M:SqzTo.Application.CQRS.V1.SqzLink.Queries.GetClicks.GetClicksRequestHandler.Handle(SqzTo.Application.CQRS.V1.SqzLink.Queries.GetClicks.GetClicksRequest,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <remarks>TODO...</remarks>
+            <returns></returns>
+            <exception cref="T:SqzTo.Application.Common.Exceptions.NotFoundException">Thrown when SqzLink is not found</exception>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+        </member>
+    </members>
+</doc>

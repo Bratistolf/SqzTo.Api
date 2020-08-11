@@ -15,12 +15,25 @@
             Primary SqzLink controller.
             </summary>
         </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.CreateSqzLink(SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateCommand)">
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.CreateSqzLink(SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateRequest)">
             <summary>
-            Converts a long url into a SqzLink.
+            Generates a SqzLink into the long url.
             </summary>
-            <param name="createSqzLinkCommand"></param>
-            <returns></returns>
+            <returns>Generated SqzLink within the <see cref="T:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateResponce"/> DTO.</returns>
+            <response code="200">
+            SqzLink was successfully created.
+            </response>
+            <response code="400">
+            The server cannot process the request due to a client error.
+            </response>
+            <response code="500">
+            An error occurred while processing request.
+            </response>
+            <response code="503">
+            The server is currently unable to handle the request due to a temporary overload or 
+            scheduled maintenance, which will likely be alleviated after some delay.
+            </response>
+            <param name="createRequest">Request from the user.</param>
         </member>
         <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.NavigateSqzLink(System.String)">
             <summary>
@@ -50,47 +63,73 @@
             <param name="sqzlink"></param>
             <returns></returns>
         </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.EditDestinationUrl(System.String,SqzTo.Application.CQRS.V1.SqzLink.Commands.EditDestinationUrl.EditDestinationUrlCommand)">
-            <summary>
-            Edit destination URL for a SqzLink.
-            </summary>
-            <param name="sqzlink"></param>
-            <param name="updateSqzLinkCommand"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.EditSqzLinkDescription(System.String,SqzTo.Application.CQRS.V1.SqzLink.Commands.EditDescription.EditDescriptionCommand)">
-            <summary>
-            
-            </summary>
-            <param name="sqzlink"></param>
-            <param name="editSqzLinkDescriptionCommand"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.SetupLinkExpiration(System.String)">
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.EditSqzLink(System.String,SqzTo.Application.CQRS.V1.SqzLink.Commands.Edit.EditCommandBody)">
             <summary>
             Sets up an expiration date for a SqzLink.
             </summary>
+            <response code="204">SqzLink's edit was a success</response>
+            <response code="400">Validation error</response>
             <param name="sqzlink"></param>
+            <param name="editCommandBody"></param>
             <returns></returns>
+        </member>
+        <member name="T:SqzTo.Api.Filters.ApiExceptionFilter">
+            <summary>
+            An abstract API filter that runs asynchronously after an action has thrown an System.Exception.
+            </summary>
+        </member>
+        <member name="M:SqzTo.Api.Filters.ApiExceptionFilter.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:SqzTo.Api.Filters.ApiExceptionFilter"/> class.
+            </summary>
+        </member>
+        <member name="M:SqzTo.Api.Filters.ApiExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Called after an action has thrown an <see cref="T:System.Exception"/>.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.Mvc.Filters.ExceptionContext"/></param>
+        </member>
+        <member name="M:SqzTo.Api.Filters.ApiExceptionFilter.HandleValidationException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Handles an <see cref="T:System.Exception"/> of type <see cref="T:SqzTo.Application.Common.Exceptions.ValidationException"/>.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.Mvc.Filters.ExceptionContext"/></param>
+        </member>
+        <member name="M:SqzTo.Api.Filters.ApiExceptionFilter.HandleNotFoundException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Handles an <see cref="T:System.Exception"/> of type <see cref="T:SqzTo.Application.Common.Exceptions.NotFoundException"/>.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.Mvc.Filters.ExceptionContext"/></param>
+        </member>
+        <member name="M:SqzTo.Api.Filters.ApiExceptionFilter.HandleNotImplementedException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Handles an <see cref="T:System.Exception"/> of type <see cref="T:System.NotImplementedException"/>.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.Mvc.Filters.ExceptionContext"/></param>
+        </member>
+        <member name="M:SqzTo.Api.Filters.ApiExceptionFilter.HandleUnknownException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Handles an <see cref="T:System.Exception"/> of unknown type.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.Mvc.Filters.ExceptionContext"/></param>
+        </member>
+        <member name="T:SqzTo.Api.Startup">
+            <summary>
+            Class that configures services and the app's request pipeline.
+            </summary>
         </member>
         <member name="M:SqzTo.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Startup init.
+            Initializes a new instance of the <see cref="T:SqzTo.Api.Startup"/> class.
             </summary>
-            <param name="configuration"></param>
-        </member>
-        <member name="M:SqzTo.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            
-            </summary>
-            <param name="services"></param>
+            <param name="configuration">An API configuration settings.</param>
         </member>
         <member name="M:SqzTo.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
-            
+            Used to specify how the app responds to HTTP requests. The request pipeline is configured by adding middleware components to an <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/> instance.
             </summary>
-            <param name="app">Application request pipeline builder</param>
-            <param name="env">Web host environment provider</param>
+            <param name="app">Application request pipeline builder.</param>
+            <param name="env">Web host environment provider.</param>
         </member>
     </members>
 </doc>

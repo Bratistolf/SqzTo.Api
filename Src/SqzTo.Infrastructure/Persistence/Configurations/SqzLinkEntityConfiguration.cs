@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SqzTo.Application.Common.Services;
 using SqzTo.Domain.Entities;
 
 namespace SqzTo.Infrastructure.Persistence.Configurations
@@ -8,6 +9,15 @@ namespace SqzTo.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<SqzLinkEntity> builder)
         {
+            builder.ToTable("sqzlinks")
+                .HasKey(enitiy => enitiy.SqzLink)
+                .HasName("sqzlink");
+
+            builder.Property(entity => entity.SqzLink)
+                .IsRequired()
+                .HasColumnName("sqzlink")
+                .HasValueGenerator(typeof(SqzLinkIdGenerator));
+
             builder.Property(entity => entity.Domain)
                 .IsRequired()
                 .HasColumnName("domain");

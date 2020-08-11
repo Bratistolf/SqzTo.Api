@@ -8,24 +8,34 @@ using System.Collections.Generic;
 
 namespace SqzTo.Api.Filters
 {
+    /// <summary>
+    /// An abstract API filter that runs asynchronously after an action has thrown an System.Exception.
+    /// </summary>
     public class ApiExceptionFilter : ExceptionFilterAttribute
     {
         private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="ApiExceptionFilter"/> class.
+        /// </summary>
         public ApiExceptionFilter()
         {
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
             {
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
-                { typeof(NotImplementedException), HandleNotImplementedException },
+                { typeof(NotImplementedException), HandleNotImplementedException }
             };
+            
         }
 
+        /// <summary>
+        /// Called after an action has thrown an <see cref="Exception"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="ExceptionContext"/></param>
         public override void OnException(ExceptionContext context)
         {
             HandleException(context);
-
             base.OnException(context);
         }
 
@@ -41,6 +51,10 @@ namespace SqzTo.Api.Filters
             HandleUnknownException(context);
         }
 
+        /// <summary>
+        /// Handles an <see cref="Exception"/> of type <see cref="ValidationException"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="ExceptionContext"/></param>
         private void HandleValidationException(ExceptionContext context)
         {
             var exception = context.Exception as ValidationException;
@@ -58,6 +72,10 @@ namespace SqzTo.Api.Filters
             context.ExceptionHandled = true;
         }
 
+        /// <summary>
+        /// Handles an <see cref="Exception"/> of type <see cref="NotFoundException"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="ExceptionContext"/></param>
         private void HandleNotFoundException(ExceptionContext context)
         {
             var exception = context.Exception as NotFoundException;
@@ -75,6 +93,10 @@ namespace SqzTo.Api.Filters
             context.ExceptionHandled = true;
         }
 
+        /// <summary>
+        /// Handles an <see cref="Exception"/> of type <see cref="NotImplementedException"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="ExceptionContext"/></param>
         private void HandleNotImplementedException(ExceptionContext context)
         {
             var exception = context.Exception as NotImplementedException;
@@ -92,6 +114,10 @@ namespace SqzTo.Api.Filters
             context.ExceptionHandled = true;
         }
 
+        /// <summary>
+        /// Handles an <see cref="Exception"/> of unknown type.
+        /// </summary>
+        /// <param name="context">The <see cref="ExceptionContext"/></param>
         private void HandleUnknownException(ExceptionContext context)
         {
             var details = new ProblemDetails

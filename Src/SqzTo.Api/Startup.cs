@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,16 +7,18 @@ using Microsoft.Extensions.Hosting;
 using SqzTo.Api.Filters;
 using SqzTo.Application;
 using SqzTo.Infrastructure;
-using SqzTo.Infrastructure.Identity;
 
 namespace SqzTo.Api
 {
+    /// <summary>
+    /// Class that configures services and the app's request pipeline.
+    /// </summary>
     public class Startup
     {
         /// <summary>
-        /// Startup init.
+        /// Initializes a new instance of the <see cref="Startup"/> class.
         /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name="configuration">An API configuration settings.</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,21 +26,21 @@ namespace SqzTo.Api
 
         public IConfiguration Configuration { get; }
         
-        // This method gets called by the runtime. Use this method to add services to the container.
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(opt => opt.Filters.Add(new ApiExceptionFilter()));
 
+            ///<summary>
+            /// Swagger configurations
+            ///</summary>
             services.AddApiVersioning(opt => 
             {
                 opt.DefaultApiVersion = new ApiVersion(1, 0);
                 opt.AssumeDefaultVersionWhenUnspecified = true;
                 opt.ReportApiVersions = true;
             });
+            services.AddOpenApiDocument();
+
 
             services.AddCors(opt => opt.AddPolicy("DevCORSPolicy", builder =>
             {
@@ -48,22 +49,15 @@ namespace SqzTo.Api
                        .AllowAnyHeader();
             }));
 
-
-            // TODO: Add IdentityUser implementation
-            //services.AddIdentityCore<SqzToUser>();
-
             services.AddApplication();
             services.AddInfrastructure(Configuration);
-
-            services.AddOpenApiDocument();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// <summary>
-        /// 
+        /// Used to specify how the app responds to HTTP requests. The request pipeline is configured by adding middleware components to an <see cref="IApplicationBuilder"/> instance.
         /// </summary>
-        /// <param name="app">Application request pipeline builder</param>
-        /// <param name="env">Web host environment provider</param>
+        /// <param name="app">Application request pipeline builder.</param>
+        /// <param name="env">Web host environment provider.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

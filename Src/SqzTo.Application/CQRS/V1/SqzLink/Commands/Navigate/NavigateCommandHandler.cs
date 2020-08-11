@@ -18,17 +18,18 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Navigate
 
         public async Task<NavigateDto> Handle(NavigateCommand request, CancellationToken cancellationToken)
         {
-            var sqzLinkSplit = request.SqzLink.Split(new string[] { "%2F", "/" }, System.StringSplitOptions.None);
-            var domain = sqzLinkSplit[0];
-            var path = sqzLinkSplit[1];
+            var sqzLinkToFind = request.SqzLink;
+            sqzLinkToFind.Replace("%2F", "/");
 
-            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(entity => entity.Domain == domain && entity.Path == path);
+            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(entity => entity.SqzLink == sqzLinkToFind);
             if (sqzLinkEntity == null)
             {
-                throw new NotFoundException($"SqzLink \"{domain + '/' + path}\" was not found.");
+                throw new NotFoundException($"SqzLink \"{sqzLinkToFind}\" was not found.");
             }
 
             sqzLinkEntity.Clicks++;
+
+            _context.SqzLinks.Update(sqzLinkEntity);
             var savingResult = await _context.SaveChangesAsync(cancellationToken);
 
             return new NavigateDto { DestinationUrl = sqzLinkEntity.DestinationUrl };

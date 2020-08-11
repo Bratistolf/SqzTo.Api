@@ -4,7 +4,7 @@ namespace SqzTo.Domain.Entities
 {
     public class SqzLinkEntity
     {
-        public int Id { get; set; }
+        public string SqzLink { get; set; }
 
         public string Domain { get; set; }
 
