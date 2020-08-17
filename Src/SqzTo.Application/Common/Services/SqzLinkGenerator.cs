@@ -6,14 +6,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SqzTo.Application.Common.Services
 {
-    public class SqzLinkIdGenerator : ValueGenerator
+    public class SqzLinkGenerator : ValueGenerator
     {
         public override bool GeneratesTemporaryValues => false;
 
         protected override object NextValue([NotNull] EntityEntry entry)
         {
             var sqzLinkEntity = (SqzLinkEntity)entry.Entity;
-            return sqzLinkEntity.Domain + "/" + sqzLinkEntity.Path;
+            return sqzLinkEntity.Domain + "/" + sqzLinkEntity.Key;
         }
     }
 }

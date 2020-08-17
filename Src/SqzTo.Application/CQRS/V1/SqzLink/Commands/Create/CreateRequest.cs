@@ -8,7 +8,7 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Create
     /// <summary>
     /// Request DTO for the POST:v1.0/sqzlink/ route.
     /// </summary>
-    public partial class CreateRequest : IRequest<CreateResponce>, IMapTo<SqzLinkEntity>
+    public partial class CreateRequest : IRequest<CreateResponse>, IMapTo<SqzLinkEntity>
     {
         /// <summary>
         /// SqzLink's domain name.

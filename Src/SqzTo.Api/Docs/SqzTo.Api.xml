@@ -4,6 +4,46 @@
         <name>SqzTo.Api</name>
     </assembly>
     <members>
+        <member name="T:SqzTo.Api.Common.ApiRoutes">
+            <summary>
+            Contains all API routes in project.
+            </summary>
+        </member>
+        <member name="F:SqzTo.Api.Common.ApiRoutes.CreateSqzLink">
+            <summary>
+            Route for POST: v1.0/sqzlink/
+            </summary>
+        </member>
+        <member name="F:SqzTo.Api.Common.ApiRoutes.BulkCreateSqzLink">
+            <summary>
+            Route for POST: v1.0/sqzlink/bulk
+            </summary>
+        </member>
+        <member name="F:SqzTo.Api.Common.ApiRoutes.NavigateSqzLink">
+            <summary>
+            Route for GET: v1.0/sqzlink/{sqzlink}
+            </summary>
+        </member>
+        <member name="F:SqzTo.Api.Common.ApiRoutes.EditSqzLink">
+            <summary>
+            Route for PATCH: v1.0/sqzlink/{sqzlink}
+            </summary>
+        </member>
+        <member name="F:SqzTo.Api.Common.ApiRoutes.GetSqzLinkDetails">
+            <summary>
+            Route for GET: v1.0/sqzlink/{sqzlink}/details
+            </summary>
+        </member>
+        <member name="F:SqzTo.Api.Common.ApiRoutes.GetSqzLinkClicks">
+            <summary>
+            Route for GET: v1.0/sqzlink/{sqzlink}/clicks
+            </summary>
+        </member>
+        <member name="F:SqzTo.Api.Common.ApiRoutes.GetSqzLinkQr">
+            <summary>
+            Route for GET: v1.0/sqzlink/{sqzlink}/qr
+            </summary>
+        </member>
         <member name="M:SqzTo.Api.Common.ObjectResults.NotImplementedObjectResult.#ctor(System.Object)">
             <summary>
             Creates a new NotImplementedObjectResult instance.
@@ -15,11 +55,11 @@
             Primary SqzLink controller.
             </summary>
         </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.CreateSqzLink(SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateRequest)">
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.CreateSqzLink(SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateRequest,System.Threading.CancellationToken)">
             <summary>
-            Generates a SqzLink into the long url.
+            Generates a SqzLink from the long url.
             </summary>
-            <returns>Generated SqzLink within the <see cref="T:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateResponce"/> DTO.</returns>
+            <returns>Generated SqzLink within the <see cref="T:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateResponse"/> DTO.</returns>
             <response code="200">
             SqzLink was successfully created.
             </response>
@@ -34,17 +74,64 @@
             scheduled maintenance, which will likely be alleviated after some delay.
             </response>
             <param name="createRequest">Request from the user.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.BulkCreateSqzLink(SqzTo.Application.CQRS.V1.SqzLink.Commands.BulkCreate.BulkCreateRequest)">
+            <summary>
+            Generates a SqzLinks from the long urls.
+            </summary>
+            <returns>Generated SqzLinks within the <see cref="T:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateResponse"/> DTO.</returns>
+            <response code="200">
+            SqzLinks were successfully created.
+            </response>
+            <response code="400">
+            The server cannot process the request due to a client error.
+            </response>
+            <response code="500">
+            An error occurred while processing request.
+            </response>
+            <response code="503">
+            The server is currently unable to handle the request due to a temporary overload or 
+            scheduled maintenance, which will likely be alleviated after some delay.
+            </response>
+            <param name="bulkCreateRequest">Request from the user.</param>
         </member>
         <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.NavigateSqzLink(System.String)">
             <summary>
             Returns original url by SqzLink route.
             </summary>
+            <returns>Destination URL.</returns>
+            <response code="200">
+            Destination URL for the SqzLink was successfully found.
+            </response>
+            <response code="400">
+            The server cannot process the request due to a client error.
+            </response>
+            <response code="404">
+            The specified resource was not found.
+            </response>
+            <response code="500">
+            An error occurred while processing request.
+            </response>
+            <response code="503">
+            The server is currently unable to handle the request due to a temporary overload or 
+            scheduled maintenance, which will likely be alleviated after some delay.
+            </response>
+            <param name="sqzlink">SqzLink</param>
+        </member>
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.EditSqzLink(System.String,SqzTo.Application.CQRS.V1.SqzLink.Commands.Edit.EditRequestBody)">
+            <summary>
+            Sets up an expiration date for a SqzLink.
+            </summary>
+            <response code="204">SqzLink's edit was a success</response>
+            <response code="400">Validation error</response>
             <param name="sqzlink"></param>
+            <param name="editRequestBody"></param>
             <returns></returns>
         </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.GetSqzLinkQr(System.String)">
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.GetSqzLinkDetails(System.String)">
             <summary>
-            Generates a QR code for a SqzLink.
+            Returns public information for a SqzLink.
             </summary>
             <param name="sqzlink"></param>
             <returns></returns>
@@ -56,21 +143,11 @@
             <param name="sqzlink"></param>
             <returns></returns>
         </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.GetSqzLinkDetails(System.String)">
+        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.GetSqzLinkQr(System.String)">
             <summary>
-            Returns public information for a SqzLink.
+            Generates a QR code for a SqzLink.
             </summary>
             <param name="sqzlink"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SqzTo.Api.Controllers.V1.SqzLinkController.EditSqzLink(System.String,SqzTo.Application.CQRS.V1.SqzLink.Commands.Edit.EditCommandBody)">
-            <summary>
-            Sets up an expiration date for a SqzLink.
-            </summary>
-            <response code="204">SqzLink's edit was a success</response>
-            <response code="400">Validation error</response>
-            <param name="sqzlink"></param>
-            <param name="editCommandBody"></param>
             <returns></returns>
         </member>
         <member name="T:SqzTo.Api.Filters.ApiExceptionFilter">

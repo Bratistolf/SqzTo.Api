@@ -4,11 +4,13 @@ namespace SqzTo.Domain.Entities
 {
     public class SqzLinkEntity
     {
+        public string Id { get; set; }
+
         public string SqzLink { get; set; }
 
         public string Domain { get; set; }
 
-        public string Path { get; set; }
+        public string Key { get; set; }
 
         public string DestinationUrl { get; set; }
 

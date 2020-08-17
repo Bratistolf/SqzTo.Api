@@ -2,12 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using SqzTo.Application.Common.Exceptions;
 using SqzTo.Application.Common.Interfaces;
+using SqzTo.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Navigate
 {
-    public class NavigateCommandHandler : IRequestHandler<NavigateCommand, NavigateDto>
+    public class NavigateCommandHandler : IRequestHandler<NavigateRequest, NavigateResponse>
     {
         private readonly ISqzToDbContext _context;
 
@@ -16,12 +17,11 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Navigate
             _context = context;
         }
 
-        public async Task<NavigateDto> Handle(NavigateCommand request, CancellationToken cancellationToken)
+        public async Task<NavigateResponse> Handle(NavigateRequest request, CancellationToken cancellationToken)
         {
-            var sqzLinkToFind = request.SqzLink;
-            sqzLinkToFind.Replace("%2F", "/");
+            var sqzLinkToFind = request.SqzLink.Replace("%2F", "/");
 
-            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(entity => entity.SqzLink == sqzLinkToFind);
+            var sqzLinkEntity = await _context.Set<SqzLinkEntity>().FirstOrDefaultAsync(entity => entity.SqzLink == sqzLinkToFind);
             if (sqzLinkEntity == null)
             {
                 throw new NotFoundException($"SqzLink \"{sqzLinkToFind}\" was not found.");
@@ -29,10 +29,10 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Navigate
 
             sqzLinkEntity.Clicks++;
 
-            _context.SqzLinks.Update(sqzLinkEntity);
+            _context.Set<SqzLinkEntity>().Update(sqzLinkEntity);
             var savingResult = await _context.SaveChangesAsync(cancellationToken);
 
-            return new NavigateDto { DestinationUrl = sqzLinkEntity.DestinationUrl };
+            return new NavigateResponse { DestinationUrl = sqzLinkEntity.DestinationUrl };
         }
     }
 }

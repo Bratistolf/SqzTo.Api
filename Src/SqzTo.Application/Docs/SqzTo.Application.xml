@@ -39,6 +39,24 @@
             SqzLink's destination URL.
             </summary>
         </member>
+        <member name="T:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateRequestHandler">
+            <summary>
+            Defines a handler for the <see cref="T:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateRequest"/>.
+            </summary>
+        </member>
+        <member name="M:SqzTo.Application.CQRS.V1.SqzLink.Commands.Create.CreateRequestHandler.#ctor(SqzTo.Application.Common.Interfaces.ISqzToDbContext,SqzTo.Application.Common.Interfaces.IUrlShorteningService,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="context">DbContext used for database manipulations.</param>
+            <param name="urlShorteningService"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="P:SqzTo.Application.CQRS.V1.SqzLink.Commands.Edit.EditRequest.Body">
+            <summary>
+            Body of the request.
+            </summary>
+        </member>
         <member name="M:SqzTo.Application.CQRS.V1.SqzLink.Queries.GetClicks.GetClicksRequestHandler.Handle(SqzTo.Application.CQRS.V1.SqzLink.Queries.GetClicks.GetClicksRequest,System.Threading.CancellationToken)">
             <summary>
             

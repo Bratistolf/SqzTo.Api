@@ -10,28 +10,28 @@ namespace SqzTo.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<SqzLinkEntity> builder)
         {
             builder.ToTable("sqzlinks")
-                .HasKey(enitiy => enitiy.SqzLink)
-                .HasName("sqzlink");
+                .HasKey(enitiy => enitiy.Id);
 
             builder.Property(entity => entity.SqzLink)
                 .IsRequired()
                 .HasColumnName("sqzlink")
-                .HasValueGenerator(typeof(SqzLinkIdGenerator));
+                .ValueGeneratedOnAddOrUpdate()
+                .HasValueGenerator(typeof(SqzLinkGenerator));
 
             builder.Property(entity => entity.Domain)
                 .IsRequired()
                 .HasColumnName("domain");
 
-            builder.Property(entity => entity.Path)
+            builder.Property(entity => entity.Key)
                 .IsRequired()
-                .HasColumnName("path");
+                .HasColumnName("key");
 
             builder.Property(entity => entity.DestinationUrl)
                 .IsRequired()
                 .HasColumnName("destination_url");
 
             builder.Property(entity => entity.Description)
-                .HasMaxLength(120)
+                .HasMaxLength(128)
                 .HasColumnName("description");
         }
     }

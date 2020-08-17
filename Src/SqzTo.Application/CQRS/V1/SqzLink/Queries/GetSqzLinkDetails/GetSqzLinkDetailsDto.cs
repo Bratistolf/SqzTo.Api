@@ -2,7 +2,7 @@
 
 namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkDetails
 {
-    public class GetSqzLinkDetailsDto
+    public class GetDetailsResponse
     {
         [JsonPropertyName("sqzlink")]
         public string Link { get; set; }

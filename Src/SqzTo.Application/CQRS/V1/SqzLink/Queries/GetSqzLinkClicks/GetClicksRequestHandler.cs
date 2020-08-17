@@ -1,7 +1,10 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SqzTo.Application.Common.Exceptions;
 using SqzTo.Application.Common.Interfaces;
+using SqzTo.Domain.Entities;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,10 +13,12 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetClicks
     public class GetClicksRequestHandler : IRequestHandler<GetClicksRequest, GetClicksResponce>
     {
         private readonly ISqzToDbContext _context;
+        private readonly IMapper _mapper;
 
-        public GetClicksRequestHandler(ISqzToDbContext context)
+        public GetClicksRequestHandler(ISqzToDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -30,13 +35,14 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Queries.GetClicks
             var domain = sqzLinkSplit[0];
             var path = sqzLinkSplit[1];
 
-            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(entity => entity.Domain == domain && entity.Path == path);
+            var sqzLinkEntity = await _context.Set<SqzLinkEntity>().FirstOrDefaultAsync(entity => entity.Domain == domain && entity.Key == path);
             if (sqzLinkEntity == null)
             {
                 throw new NotFoundException($"SqzLink \"{domain + '/' + path}\" was not found.");
             }
 
-            return new GetClicksResponce { Clicks = sqzLinkEntity.Clicks };
+            var getClicksResponce = _mapper.Map<GetClicksResponce>(sqzLinkEntity);
+            return getClicksResponce;
         }
     }
 }

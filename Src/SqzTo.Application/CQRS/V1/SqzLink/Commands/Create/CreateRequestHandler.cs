@@ -1,20 +1,27 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using SqzTo.Application.Common.Interfaces;
 using SqzTo.Domain.Entities;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Create
 {
-    public class CreateRequestHandler : IRequestHandler<CreateRequest, CreateResponce>
+    /// <summary>
+    /// Defines a handler for the <see cref="CreateRequest"/>.
+    /// </summary>
+    public class CreateRequestHandler : IRequestHandler<CreateRequest, CreateResponse>
     {
         private readonly ISqzToDbContext _context;
         private readonly IUrlShorteningService _urlShorteningService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context">DbContext used for database manipulations.</param>
+        /// <param name="urlShorteningService"></param>
+        /// <param name="mapper"></param>
         public CreateRequestHandler(ISqzToDbContext context, IUrlShorteningService urlShorteningService, IMapper mapper)
         {
             _context = context;
@@ -22,27 +29,15 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Create
             _mapper = mapper;
         }
 
-        public async Task<CreateResponce> Handle(CreateRequest request, CancellationToken cancellationToken)
+        public async Task<CreateResponse> Handle(CreateRequest request, CancellationToken cancellationToken)
         {
-            var destinationUrl = request.DestinationUrl;
-            var domain = request.Domain == string.Empty ? "sqz.to" : request.Domain;
-            var path = _urlShorteningService.ShortenUrl(destinationUrl);
+            var sqzLinkEntity = _mapper.Map<SqzLinkEntity>(request);
+            sqzLinkEntity.Key = _urlShorteningService.ShortenUrl(request.DestinationUrl);
 
-            var sqzLinkEntity = await _context.SqzLinks.FirstOrDefaultAsync(link => link.SqzLink == domain + '/' + path);
-            if (sqzLinkEntity != null)
-            {
-                throw new NotImplementedException();
-            }
+            _context.Set<SqzLinkEntity>().Add(sqzLinkEntity);
+            await _context.SaveChangesAsync(cancellationToken);
 
-            sqzLinkEntity = _mapper.Map<SqzLinkEntity>(request);
-            sqzLinkEntity.Path = path;
-
-            _context.SqzLinks.Add(sqzLinkEntity);
-            var savingResult = await _context.SaveChangesAsync(cancellationToken);
-
-            var savedSqzLink = await _context.SqzLinks.FindAsync(sqzLinkEntity);
-
-            return new CreateResponce { SqzLink = savedSqzLink.SqzLink };
+            return new CreateResponse { SqzLink = sqzLinkEntity.SqzLink };
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using SqzTo.Application.Common.Mappings.Interfaces;
+using SqzTo.Domain.Entities;
+using System;
 using System.Text.Json.Serialization;
 
 namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Edit
 {
-    public class EditCommandBody
+    public class EditRequestBody : IMapTo<SqzLinkEntity>
     {
         [JsonPropertyName("domain")]
         public string Domain { get; set; }

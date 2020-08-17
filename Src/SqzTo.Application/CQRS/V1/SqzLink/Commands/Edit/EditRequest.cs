@@ -8,6 +8,9 @@ namespace SqzTo.Application.CQRS.V1.SqzLink.Commands.Edit
         [JsonPropertyName("sqzlink")]
         public string SqzLink { get; set; }
 
-        public EditCommandBody Body { get; set; }
+        /// <summary>
+        /// Body of the request.
+        /// </summary>
+        public EditRequestBody Body { get; set; }
     }
 }
