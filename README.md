@@ -1,2 +1,2 @@
-# sqzto
-Simplistic URL shortener
+# SqzTo.Api
+REST Api for the SqzTo link manager service
