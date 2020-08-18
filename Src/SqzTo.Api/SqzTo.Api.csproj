@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SqzTo.Application\SqzTo.Application.csproj" />
-    <ProjectReference Include="..\SqzTo.Infrastructure\SqzTo.Infrastructure.csproj" />
+    <ProjectReference Include="..\SqzTo.Application\Application.csproj" />
+    <ProjectReference Include="..\SqzTo.Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>

@@ -1,9 +1,16 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>SqzTo.Application</name>
+        <name>Application</name>
     </assembly>
     <members>
+        <!-- Badly formed XML comment ignored for member "T:SqzTo.Application.Common.Behaviours.ValidationBehaviour`2" -->
+        <member name="M:SqzTo.Application.Common.Behaviours.ValidationBehaviour`2.#ctor(System.Collections.Generic.IEnumerable{FluentValidation.IValidator{`0}})">
+            <summary>
+            
+            </summary>
+            <param name="validators"></param>
+        </member>
         <member name="M:SqzTo.Application.Common.Mappings.MappingProfile.ApplyMappingsFromAssembly(System.Type[])">
             <summary>
             Load all types that implement interface <see cref="T:SqzTo.Application.Common.Mappings.Interfaces.IMapFrom`1"/>

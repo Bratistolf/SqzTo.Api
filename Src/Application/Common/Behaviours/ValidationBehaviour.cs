@@ -7,10 +7,19 @@ using System.Threading.Tasks;
 
 namespace SqzTo.Application.Common.Behaviours
 {
+    /// <summary>
+    /// The pipeline behaviour for the validation.
+    /// </summary>
+    /// <typeparam name="TRequest">Type of <see cref="IRequest"/></typeparam>
+    /// <typeparam name="TResponse">Type of <see cref="IRequest{TResponse}"</typeparam>
     public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="validators"></param>
         public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;
@@ -27,7 +36,7 @@ namespace SqzTo.Application.Common.Behaviours
 
                 if (failures.Count != 0)
                 {
-                    throw new Exceptions.ValidationException(failures);
+                    throw new ValidationException(failures);
                 }
             }
             return await next();

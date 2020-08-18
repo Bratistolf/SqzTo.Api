@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SqzTo.Domain\SqzTo.Domain.csproj" />
+    <ProjectReference Include="..\SqzTo.Domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
