@@ -1,11 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.TestHelper;
-using FluentValidation.Validators;
 using NUnit.Framework;
 using SqzTo.Application.Common.Validation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.UnitTests.Validation
 {
@@ -25,7 +21,7 @@ namespace Application.UnitTests.Validation
             var validator = new UrlValidator();
 
             // Act & Assert
-            validator.ShouldHaveValidationErrorFor(x => x, wrongUrl).;
+            validator.ShouldHaveValidationErrorFor(x => x, wrongUrl);
         }
     }
 }

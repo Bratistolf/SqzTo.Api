@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Common;
+using Microsoft.EntityFrameworkCore;
 using SqzTo.Application.Common.Interfaces;
 using SqzTo.Domain.Entities;
 using System;
@@ -10,8 +11,6 @@ namespace SqzTo.Infrastructure.Persistence
 {
     public class SqzToDbContext : DbContext, ISqzToDbContext
     {
-        public DbSet<SqzLinkEntity> SqzLinks { get; set; }
-
         public SqzToDbContext(
             DbContextOptions<SqzToDbContext> options
             ) : base(options)
@@ -20,17 +19,17 @@ namespace SqzTo.Infrastructure.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries<SqzLinkEntity>())
+            foreach (var entry in ChangeTracker.Entries<IHasTracking>())
             {
                 switch (entry.State)
                 {
                     case EntityState.Added:
                         entry.Entity.Created = DateTime.UtcNow;
-                        entry.Entity.CreatedBy = "";
+                        entry.Entity.CreatedBy = 0;
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModified = DateTime.UtcNow;
-                        entry.Entity.LastModifiedBy = "";
+                        entry.Entity.LastModifiedBy = 0;
                         break;
                 }
             }

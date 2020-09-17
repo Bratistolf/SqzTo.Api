@@ -1,38 +1,42 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SqzTo.Application.Common.Services;
 using SqzTo.Domain.Entities;
 
 namespace SqzTo.Infrastructure.Persistence.Configurations
 {
-    public class SqzLinkEntityConfiguration : IEntityTypeConfiguration<SqzLinkEntity>
+    /// <summary>
+    /// Default configuration for the <see cref="SqzLink"/>.
+    /// </summary>
+    public class SqzLinkEntityConfiguration : IEntityTypeConfiguration<SqzLink>
     {
-        public void Configure(EntityTypeBuilder<SqzLinkEntity> builder)
+        public void Configure(EntityTypeBuilder<SqzLink> builder)
         {
             builder.ToTable("sqzlinks")
-                .HasKey(enitiy => enitiy.Id);
+                   .HasKey(link => link.Id);
 
-            builder.Property(entity => entity.SqzLink)
-                .IsRequired()
-                .HasColumnName("sqzlink")
-                .ValueGeneratedOnAddOrUpdate()
-                .HasValueGenerator(typeof(SqzLinkGenerator));
+            builder.Property(link => link.Id)
+                   .ValueGeneratedOnAdd();
 
-            builder.Property(entity => entity.Domain)
-                .IsRequired()
-                .HasColumnName("domain");
+            builder.HasOne(link => link.Group)
+                   .WithMany(group => group.SqzLinks)
+                   .HasForeignKey(entity => entity.GroupId)
+                   .OnDelete(DeleteBehavior.SetNull);
 
-            builder.Property(entity => entity.Key)
-                .IsRequired()
-                .HasColumnName("key");
+            builder.Property(link => link.Domain)
+                   .IsRequired()
+                   .HasColumnName("domain");
 
-            builder.Property(entity => entity.DestinationUrl)
-                .IsRequired()
-                .HasColumnName("destination_url");
+            builder.Property(link => link.Key)
+                   .IsRequired()
+                   .HasColumnName("key");
 
-            builder.Property(entity => entity.Description)
-                .HasMaxLength(128)
-                .HasColumnName("description");
+            builder.Property(link => link.DestinationUrl)
+                   .IsRequired()
+                   .HasColumnName("destination_url");
+
+            builder.Property(link => link.Description)
+                   .HasMaxLength(256)
+                   .HasColumnName("description");
         }
     }
 }

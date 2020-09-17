@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SqzTo.Api.Common;
-using SqzTo.Application.CQRS.V1.SqzLink.Commands.BulkCreate;
-using SqzTo.Application.CQRS.V1.SqzLink.Commands.Create;
-using SqzTo.Application.CQRS.V1.SqzLink.Commands.Edit;
-using SqzTo.Application.CQRS.V1.SqzLink.Commands.Navigate;
-using SqzTo.Application.CQRS.V1.SqzLink.Queries.GetClicks;
-using SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkDetails;
-using SqzTo.Application.CQRS.V1.SqzLink.Queries.GetSqzLinkQr;
+using SqzTo.Application.CQRS.V1.Link.Commands.BulkCreate;
+using SqzTo.Application.CQRS.V1.Link.Commands.Create;
+using SqzTo.Application.CQRS.V1.Link.Commands.Edit;
+using SqzTo.Application.CQRS.V1.Link.Commands.Navigate;
+using SqzTo.Application.CQRS.V1.Link.Queries.GetClicks;
+using SqzTo.Application.CQRS.V1.Link.Queries.GetSqzLinkDetails;
+using SqzTo.Application.CQRS.V1.Link.Queries.GetSqzLinkQr;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace SqzTo.Api.Controllers.V1
         /// <summary>
         /// Generates a SqzLink from the long url.
         /// </summary>
-        /// <returns>Generated SqzLink within the <see cref="CreateResponse"/> DTO.</returns>
+        /// <returns>Generated SqzLink within the <see cref="SqzLinkDto"/> DTO.</returns>
         /// <response code="200">
         /// SqzLink was successfully created.
         /// </response>
@@ -42,11 +42,11 @@ namespace SqzTo.Api.Controllers.V1
         /// <param name="cancellationToken">Cancellation token.</param>
         [HttpPost]
         [Route(ApiRoutes.CreateSqzLink)]
-        [ProducesResponseType(typeof(ActionResult<CreateResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ActionResult<SqzLinkDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<ActionResult<CreateResponse>> CreateSqzLink([FromBody] CreateRequest createRequest, CancellationToken cancellationToken)
+        public async Task<ActionResult<SqzLinkDto>> CreateSqzLink([FromBody] CreateCommand createRequest, CancellationToken cancellationToken)
         {
             return Ok(await Mediator.Send(createRequest, cancellationToken));
         }
@@ -54,7 +54,7 @@ namespace SqzTo.Api.Controllers.V1
         /// <summary>
         /// Generates a SqzLinks from the long urls.
         /// </summary>
-        /// <returns>Generated SqzLinks within the <see cref="CreateResponse"/> DTO.</returns>
+        /// <returns>Generated SqzLinks within the <see cref="SqzLinkDto"/> DTO.</returns>
         /// <response code="200">
         /// SqzLinks were successfully created.
         /// </response>
