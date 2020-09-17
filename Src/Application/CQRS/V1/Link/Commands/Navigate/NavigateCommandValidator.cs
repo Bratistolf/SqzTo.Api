@@ -3,7 +3,7 @@ using SqzTo.Application.Common.Validation;
 
 namespace SqzTo.Application.CQRS.V1.Link.Commands.Navigate
 {
-    public class NavigateCommandValidator : AbstractValidator<NavigateRequest>
+    public class NavigateCommandValidator : AbstractValidator<NavigateCommand>
     {
         public NavigateCommandValidator()
         {

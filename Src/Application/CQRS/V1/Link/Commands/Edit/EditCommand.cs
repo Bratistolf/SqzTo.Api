@@ -1,12 +1,17 @@
-﻿using SqzTo.Application.Common.Mappings.Interfaces;
+﻿using AutoMapper;
+using MediatR;
+using SqzTo.Application.Common.Mappings.Interfaces;
 using SqzTo.Domain.Entities;
 using System;
 using System.Text.Json.Serialization;
 
 namespace SqzTo.Application.CQRS.V1.Link.Commands.Edit
 {
-    public class EditRequestBody : IMapTo<Domain.Entities.SqzLink>
+    public class EditCommand : IRequest, IMapTo<SqzLink>, IHaveCustomMappings
     {
+        [JsonIgnore]
+        public string SqzLink { get; set; }
+
         [JsonPropertyName("domain")]
         public string Domain { get; set; }
 
@@ -17,6 +22,11 @@ namespace SqzTo.Application.CQRS.V1.Link.Commands.Edit
         public string Description { get; set; }
 
         [JsonPropertyName("expiring_at")]
-        public DateTime ExpiringAt { get; set; }
+        public DateTime? ExpiringAt { get; set; }
+
+        public void CreateMappings(IMapperConfigurationExpression configuration)
+        {
+            // TODO: ...
+        }
     }
 }

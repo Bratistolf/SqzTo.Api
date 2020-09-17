@@ -84,7 +84,6 @@ namespace SqzTo.Application.Common.Mappings
             {
                 foreach (var map in maps)
                     map?.CreateMappings(AutoMapperConfig.MapperConfigurationExpression);
-
             }
         }
     }

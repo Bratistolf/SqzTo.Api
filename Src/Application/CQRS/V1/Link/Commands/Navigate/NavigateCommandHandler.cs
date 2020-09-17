@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SqzTo.Application.CQRS.V1.Link.Commands.Navigate
 {
-    public class NavigateCommandHandler : IRequestHandler<NavigateRequest, NavigateResponse>
+    public class NavigateCommandHandler : IRequestHandler<NavigateCommand, NavigateDto>
     {
         private readonly ISqzToDbContext _context;
 
@@ -17,7 +17,7 @@ namespace SqzTo.Application.CQRS.V1.Link.Commands.Navigate
             _context = context;
         }
 
-        public async Task<NavigateResponse> Handle(NavigateRequest request, CancellationToken cancellationToken)
+        public async Task<NavigateDto> Handle(NavigateCommand request, CancellationToken cancellationToken)
         {
             var sqzLinkToFind = request.SqzLink.Replace("%2F", "/");
 
@@ -32,7 +32,7 @@ namespace SqzTo.Application.CQRS.V1.Link.Commands.Navigate
             _context.Set<Domain.Entities.SqzLink>().Update((Domain.Entities.SqzLink)sqzLinkEntity);
             var savingResult = await _context.SaveChangesAsync(cancellationToken);
 
-            return new NavigateResponse { DestinationUrl = sqzLinkEntity.DestinationUrl };
+            return new NavigateDto { DestinationUrl = sqzLinkEntity.DestinationUrl };
         }
     }
 }

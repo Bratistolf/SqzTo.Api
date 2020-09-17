@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Extentions\" />
+    <Folder Include="CQRS\V1\Link\Queries\" />
   </ItemGroup>
 
 </Project>
